@@ -1,0 +1,60 @@
+import React, {useEffect, useState} from "react";
+import TableComponent from "@/components/TableComponent";
+import Loader from "@/components/form/Loader";
+import Link from "next/link";
+import {AdminTab} from "@/types/admin";
+
+interface ActiveTabsProps {
+    tabs: AdminTab[],
+    onSelectActiveTab?: (activeTab: string) => void
+}
+
+const AdminTabs: React.FC<ActiveTabsProps> = ({tabs, onSelectActiveTab}) => {
+
+    const [activeTab, setActiveTab] = useState<AdminTab>(tabs[0]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (onSelectActiveTab)
+            onSelectActiveTab(activeTab.id)
+    }, [activeTab]);
+
+    const activeTabClass = "active dark:text-blue-500 border-fuchsia-500";
+    const inactiveTabClass = "border-transparent hover:border-gray-300 dark:hover:text-gray-300";
+
+    return (
+        <div>
+            <div className="bg-gray-900 text-gray-400">
+                <nav className="text-sm font-medium border-b">
+                    <ul className="flex flex-wrap -mb-px">
+                        {tabs.length > 0 && tabs.map((tab) => (
+                            <li className="me-2" key={tab.id}>
+                                <Link
+                                    href={`/dashboard/admin/${tab.id}`}
+                                    onClick={() => setActiveTab(tab)}
+                                    className={`inline-block p-4 border-b-2 rounded-t-lg capitalize ${
+                                        activeTab.id === tab.id ? activeTabClass : inactiveTabClass
+                                    }`}
+                                >{tab.title ?? tab.id.replace('-', ' ')}</Link>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+                <div className="">
+                    {
+                        activeTab.id !== "summary" && activeTab.id !== "" && (
+                            <TableComponent tab={activeTab} onLoaded={(status) => setLoading(status)}/>
+                        )
+                    }
+                    {
+                        (activeTab.id !== "summary" && loading) &&
+                        <div className="p-6 my-24 min-w-max"><Loader/></div>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
+export default AdminTabs;

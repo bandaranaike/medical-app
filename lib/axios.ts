@@ -1,8 +1,24 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL, // e.g., https://api.myclinic.com
-  withCredentials: true, // crucial for Sanctum cookies
+axios.defaults.withCredentials = true;
+
+const axiosInstance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    withCredentials: true,
+    headers: {
+        'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY,
+        'Content-Type': 'application/json',
+        'Referer': "http://localhost:3001"
+    },
 });
 
-export default api;
+// Helper to set token dynamically
+export const setAxiosToken = (token: string | null) => {
+    if (token) {
+        axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
+    } else {
+        delete axiosInstance.defaults.headers.Authorization;
+    }
+};
+
+export default axiosInstance;
