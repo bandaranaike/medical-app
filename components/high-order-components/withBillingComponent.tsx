@@ -12,7 +12,7 @@ import customStyles from "@/lib/customStyles";
 import AvailabilityDatePicker from "@/components/form/AvailabilityDatePicker";
 import debounce from "lodash.debounce";
 import axios from "@/lib/axios";
-import {useUserContext} from "@/context/UserContext";
+import {useUserContext} from "@/contexts/UserContext";
 import OldBillContinue from "@/components/reception/OldBillContinue";
 
 interface WithBillingComponentProps {
