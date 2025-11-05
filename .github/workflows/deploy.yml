@@ -37,7 +37,7 @@ jobs:
           ssh-keyscan "${SERVER_IP}" >> ~/.ssh/known_hosts
 
           echo "📦 Uploading build to production..."
-          rsync -avz --delete --exclude=node_modules --exclude=.git ./ root@"${SERVER_IP}":"${DEPLOY_PATH}"
+          rsync -avz --delete --exclude=node_modules --exclude=.git --exclude=.env --exclude=ecosystem.config.js ./ root@"${SERVER_IP}":"${DEPLOY_PATH}"
 
           echo "🚀 Deploying on remote server..."
           ssh root@"${SERVER_IP}" << EOF
