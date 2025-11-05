@@ -1,0 +1,49 @@
+name: Deploy to Production - Medical App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'   # Latest LTS (as of 2025)
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          echo "🔐 Setting up SSH..."
+          mkdir -p ~/.ssh
+          echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan "${SERVER_IP}" >> ~/.ssh/known_hosts
+
+          echo "📦 Uploading build to production..."
+          rsync -avz --delete --exclude=node_modules --exclude=.git ./ root@"${SERVER_IP}":"${DEPLOY_PATH}"
+
+          echo "🚀 Deploying on remote server..."
+          ssh root@"${SERVER_IP}" << EOF
+            cd "${DEPLOY_PATH}"
+            npm ci
+            npm run build
+            pm2 restart ecosystem.config.js --update-env || pm2 start ecosystem.config.js
+            sudo systemctl reload nginx
+          EOF
