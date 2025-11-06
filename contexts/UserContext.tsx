@@ -80,15 +80,17 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     // Logout
     const logout = async () => {
         try {
-            await axios.post("/logout").then(() => {
-                setUser(null)
-                Cookies.remove("token");
-                Cookies.remove("laravel_session");
-                Cookies.remove("XSRF-TOKEN");
-                location.replace('/login');
-            });
-        } catch (e) {
-            console.error("Logout failed", e);
+            await axios.post("/logout", {}, { withCredentials: true });
+        } catch (error) {
+            console.error("Logout request failed:", error);
+        } finally {
+            Cookies.remove("token");
+            setUserWithStorage(null);
+            localStorage.removeItem("user");
+            localStorage.removeItem("shift");
+
+            // Force reload and redirect
+            window.location.href = "/login";
         }
         Cookies.remove("token");
         setUserWithStorage(null);

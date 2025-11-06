@@ -8,7 +8,8 @@ const axiosInstance = axios.create({
     headers: {
         'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY,
         'Content-Type': 'application/json',
-        'Referer': "http://localhost:3001"
+        'Referer': process.env.NEXT_PUBLIC_APP_URL,
+        "X-Requested-With": "XMLHttpRequest",
     },
 });
 

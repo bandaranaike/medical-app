@@ -1,21 +1,21 @@
-import {NextResponse} from 'next/server';
-import type {NextRequest} from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
-    const authCookie = request.cookies.get('XSRF-TOKEN' as any);
-    const isLoginPage = request.nextUrl.pathname === '/login';
+export default function proxy(request: NextRequest) {
+    const authCookie = request.cookies.get("XSRF-TOKEN");
+    const isLoginPage = request.nextUrl.pathname === "/login";
 
     if (!authCookie && !isLoginPage) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        return NextResponse.redirect(new URL("/login", request.url));
     }
 
     if (authCookie && isLoginPage) {
-        return NextResponse.redirect(new URL('/', request.url));
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+    matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
