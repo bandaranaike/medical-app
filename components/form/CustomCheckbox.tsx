@@ -30,7 +30,7 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ label, checked, setChec
             >
                 {checked && <div className="w-2 h-2 bg-white rounded"></div>}
             </div>
-            {label && <span className="ml-2 text-sm text-gray-200">{label}</span>}
+            {label && <span className="ml-2 text-sm">{label}</span>}
         </div>
     );
 };

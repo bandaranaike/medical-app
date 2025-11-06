@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import CustomCheckbox from "@/components/form/CustomCheckbox";
 import axios from "@/lib/axios";
 import Loader from "@/components/form/Loader";
+import {Button} from "@/components/ui/button";
 
 type Availability = {
     doctor_id: number | string;
@@ -112,7 +113,7 @@ export default function DoctorAvailabilityPanel({doctorId, id}: DoctorAvailabili
                     <CustomCheckbox setChecked={setOverride} checked={override} label={"Override existing"}/>
                 </label>
 
-                <button
+                <Button
                     onClick={onGenerate}
                     disabled={isGenerating}
                     className="inline-flex items-center gap-2 rounded-lg disabled:opacity-60 disabled:cursor-not-allowed text-white px-3 py-1.5 shadow-sm"
@@ -140,7 +141,7 @@ export default function DoctorAvailabilityPanel({doctorId, id}: DoctorAvailabili
                         </svg>
                     )}
                     <span>Generate</span>
-                </button>
+                </Button>
             </div>
 
             {msg && (
@@ -156,19 +157,19 @@ export default function DoctorAvailabilityPanel({doctorId, id}: DoctorAvailabili
                 </div>
             )}
 
-            <div className="rounded-lg shadow border border-gray-700 overflow-hidden">
+            <div className="rounded-lg border overflow-hidden">
                 <div className="justify-center flex items-center">
                     {isLoading && (<Loader/>)}
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="min-w-full text-xs text-gray-500">
+                    <table className="min-w-full text-xs text-gray-500 stripped-all">
                         <thead className="text-gray-400">
-                        <tr className="border-b border-gray-700">
-                            <th className="text-left px-3 py-2 border-r border-gray-700">Date</th>
-                            <th className="text-left px-3 py-2 border-r border-gray-700">Time</th>
-                            <th className="text-left px-3 py-2 border-r border-gray-700">Seats</th>
-                            <th className="text-left px-3 py-2 border-r border-gray-700">Available</th>
+                        <tr className="border-b">
+                            <th className="text-left px-3 py-2 border-r">Date</th>
+                            <th className="text-left px-3 py-2 border-r">Time</th>
+                            <th className="text-left px-3 py-2 border-r">Seats</th>
+                            <th className="text-left px-3 py-2 border-r">Available</th>
                             <th className="text-left px-3 py-2">Status</th>
                         </tr>
                         </thead>
@@ -182,11 +183,11 @@ export default function DoctorAvailabilityPanel({doctorId, id}: DoctorAvailabili
                         )}
 
                         {rows?.map((r, idx) => (
-                            <tr key={`${r.date}-${r.time}-${idx}`} className="odd:bg-gray-900/10 even:bg-gray-900/20">
-                                <td className="px-4 py-1 font-medium ">{r.date}</td>
-                                <td className="px-4 py-1 tabular-nums">{r.time.slice(0, 5)}</td>
-                                <td className="px-4 py-1">{r.seats}</td>
-                                <td className="px-4 py-1">{r.available_seats}</td>
+                            <tr key={`${r.date}-${r.time}-${idx}`} className="even:bg-gray-900/5">
+                                <td className="px-4 py-1 font-medium border-r">{r.date}</td>
+                                <td className="px-4 py-1 tabular-nums border-r">{r.time.slice(0, 5)}</td>
+                                <td className="px-4 py-1 border-r">{r.seats}</td>
+                                <td className="px-4 py-1 border-r">{r.available_seats}</td>
                                 <td className="px-4 py-1">
                                     <span
                                         className={

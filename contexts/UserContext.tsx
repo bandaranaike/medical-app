@@ -83,6 +83,8 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
             await axios.post("/logout").then(() => {
                 setUser(null)
                 Cookies.remove("token");
+                Cookies.remove("laravel_session");
+                Cookies.remove("XSRF-TOKEN");
                 location.replace('/login');
             });
         } catch (e) {

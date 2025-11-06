@@ -103,7 +103,7 @@ const ServiceCostReport = () => {
 
             {/* Date Range Selector */}
             <div
-                className="mb-6 rounded-lg bg-white p-4 border">
+                className="mb-6 rounded-lg p-4 border">
                 <div className="flex flex-wrap gap-4 mb-4">
                     <div className="flex-1 min-w-[200px]">
                         <label className="block text-sm font-medium mb-1">
@@ -180,7 +180,7 @@ const ServiceCostReport = () => {
                         <h2 className="text-lg font-semibold mb-3 text-gray-800 dark:text-white">Summary</h2>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <div
-                                className="bg-white p-3 rounded border">
+                                className="p-3 rounded border">
                                 <p className="text-sm">Date Range</p>
                                 <p className="font-medium dark:text-white">
                                     {new Date(report.meta.start_date).toLocaleDateString()} -{' '}
@@ -188,12 +188,12 @@ const ServiceCostReport = () => {
                                 </p>
                             </div>
                             <div
-                                className="bg-white p-3 rounded border">
+                                className="p-3 rounded border">
                                 <p className="text-sm">Services</p>
                                 <p className="font-medium dark:text-white">{report.meta.total_services}</p>
                             </div>
                             <div
-                                className="bg-white p-3 rounded border">
+                                className="p-3 rounded border">
                                 <p className="text-sm">Total Bill Amount</p>
                                 <p className="font-medium text-green-600 dark:text-green-400">
                                     {report.meta.total_bill_amount.toLocaleString(undefined, {
@@ -203,7 +203,7 @@ const ServiceCostReport = () => {
                                 </p>
                             </div>
                             <div
-                                className="bg-white p-3 rounded border">
+                                className="p-3 rounded border">
                                 <p className="text-sm">Total System Amount</p>
                                 <p className="font-medium text-blue-600 dark:text-blue-400">
                                     {report.meta.total_system_amount.toLocaleString(undefined, {
@@ -217,7 +217,7 @@ const ServiceCostReport = () => {
 
                     {/* Report Table */}
                     <div
-                        className="bg-white rounded-lg overflow-hidden border">
+                        className="rounded-lg overflow-hidden border">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y">
                                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -240,7 +240,7 @@ const ServiceCostReport = () => {
                                 </tr>
                                 </thead>
                                 <tbody
-                                    className="bg-white divide-y">
+                                    className="divide-y">
                                 {report.data.map((item) => (
                                     <tr key={item.service_id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">

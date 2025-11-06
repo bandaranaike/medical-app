@@ -46,7 +46,7 @@ export default function DashboardLayout({children}: { children: ReactNode }) {
                                      onChange={setShift}/>
                     </div>
                     <span className="mr-3">Welcome {user.name}</span>
-                    <button className="" onClick={logout}>Logout</button>
+                    <button onClick={logout}>Logout</button>
                 </div>
             </header>
 
